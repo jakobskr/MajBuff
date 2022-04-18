@@ -2,20 +2,16 @@ from ast import For, parse
 from turtle import heading
 from wsgiref import headers
 from flask import Flask, render_template
+from datetime import datetime
 import os
 import json
 app = Flask(__name__)
 
-headings = ("MatchId", "Score", "Pos", "Duration")
-
-data = (("220416-7df9d3be-00a4-4fc9-a6a5-29f2f3302db0", "31400", "1"),
-       ("220412-c147b51a-5f3d-4325-bd6c-def1613a00d5", "26600", "3"),
-       ("220412-aa86ba25-60c3-4d3f-8f3b-697b99886406", "-900", "4")
-)
+headings = ("MatchId", "Score", "Pos", "Start Time", "Duration")
 
 @app.route("/")
 def table():
-    heads,datas = parse_records(118331092)
+    heads,datas = parse_records(124876804)
     return render_template("table.html", headings=headings, data=datas)
 
 
@@ -31,9 +27,11 @@ def parse_records(account_id):
             head = parsed["head"]
             data = parsed["data"]
             uuid = head["uuid"]
+            startTime = datetime.utcfromtimestamp(head["start_time"]).strftime('%Y-%m-%d %H:%M:%S')
+            Duration = datetime.utcfromtimestamp(head["end_time"]-head["start_time"]).strftime('%H:%M:%S')
             players = head["accounts"]
             result = head["result"]
-            
+
             seat = -1
             for x in players:
                 if account_id == x["account_id"]:
@@ -41,7 +39,7 @@ def parse_records(account_id):
                     break
             if(seat == -1):
                 continue
-            
+
 
             #print(type(players))
 
@@ -50,8 +48,8 @@ def parse_records(account_id):
                 if seat == pos["seat"]:
                     break
                 placement += 1
-            
+
             print(uuid)
-            datas.append((uuid, result["players"][placement - 1]["total_point"], placement))
+            datas.append((uuid, result["players"][placement - 1]["total_point"], placement, startTime, Duration))
     print(datas)
     return heads, (datas)
