@@ -6,7 +6,7 @@ import os
 import json
 app = Flask(__name__)
 
-headings = ("MatchId", "score", "pos")
+headings = ("MatchId", "Score", "Pos", "Duration")
 
 data = (("220416-7df9d3be-00a4-4fc9-a6a5-29f2f3302db0", "31400", "1"),
        ("220412-c147b51a-5f3d-4325-bd6c-def1613a00d5", "26600", "3"),
@@ -43,7 +43,7 @@ def parse_records(account_id):
                 continue
             
 
-            print(type(players))
+            #print(type(players))
 
             placement = 1
             for pos in result["players"]:

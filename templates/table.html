@@ -7,19 +7,19 @@
         <link rel="stylesheet" href="/static/styles.css"/>
     </head>
     <body>
-        <h1>MajBuff</h1>
-        <table>
-            <tr>
+        <h1 class="logo">MAJBUFF</h1>
+        <table class="table">
+            <tr class="table__header">
                 {% for header in headings %}
-                    <th> {{header}}</th>
+                    <th class="table__cell"> {{header}}</th>
                 {% endfor %}
             </tr>
             
            
                 {% for row in data %}
-                <tr>  
+                <tr class="table__row">  
                     {% for cell in row %}
-                        <td>{{cell}}</td>
+                        <td class="table__cell">{{cell}}</td>
                     {% endfor %}
 
                 </tr>

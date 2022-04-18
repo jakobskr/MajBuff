@@ -9,13 +9,14 @@ function fetchRecord(recordList) {
             function(i, results) {
                 //let results = parse(record);
                 console.log(results)
+
                 //console.log(net.MessageWrapper.decodeMessage(record))
             }
         );
     });
 }
 
-for (x = 0; x< 3; x++) {
+for (x = 0; x< 1; x++) {
     app.NetAgent.sendReq2Lobby(
             "Lobby",
             "fetchGameRecordList",
