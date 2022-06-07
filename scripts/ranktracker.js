@@ -1,7 +1,7 @@
 function ranktracker() {
 	games = []
-	//Total games fethced = max * 5
-	var max = 10 
+	//Total games fethced = max * 5	
+	var max = 20
 	var c = 0
 	for (x = 0; x < max ; x++) {
 		app.NetAgent.sendReq2Lobby(
@@ -20,6 +20,7 @@ function ranktracker() {
 						var points = 0
 						var d = new Date(result.end_time * 1000)
 						var d1 = new Date(result.start_time * 1000)
+						var rankName = ""
 						//console.log(d1.toLocaleString() + " " + d.toLocaleString())
 						var et = d1.toString()
 						et = et.substring(0,24)
@@ -27,7 +28,7 @@ function ranktracker() {
 							if (result.accounts[i].nickname == "Hzl") {
 								preScore = result.accounts[i].level.score
 								seat = result.accounts[i].seat
-								
+								rankName = cfg.level_definition.level_definition.map_[result.accounts[i].level.id].full_name_en
 							}
 						}
 							
@@ -44,7 +45,7 @@ function ranktracker() {
 						
 						
 						if (rt != 0 ) {
-							games.unshift(result.uuid + "," + et + "," + points + "," + pos + "," + preScore + "," + rt + "," + endScore + ",")
+							games.unshift(result.uuid + "," + et + "," + points + "," + pos + "," + preScore + "," + rt + "," + endScore + "," + rankName + ",")
 						}
 						
 					});
