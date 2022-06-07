@@ -1,7 +1,7 @@
 function ranktracker() {
 	games = []
 	//Total games fethced = max * 5	
-	var max = 20
+	var max = 1
 	var c = 0
 	for (x = 0; x < max ; x++) {
 		app.NetAgent.sendReq2Lobby(
@@ -11,7 +11,8 @@ function ranktracker() {
 					function temp(i, ret) {
 					//console.log(ret)
 					ret.record_list.forEach(result => {
-						//console.log(result)
+						
+						console.log(result)
 						var seat = -1
 						var preScore = 0
 						var rt = 0
@@ -21,6 +22,13 @@ function ranktracker() {
 						var d = new Date(result.end_time * 1000)
 						var d1 = new Date(result.start_time * 1000)
 						var rankName = ""
+						
+						if(result.head.config.meta.mode_id) {
+							var roomName = cfg.desktop.matchmode.map_[result.head.config.meta.mode_id].room_name_en
+						}
+							
+						
+						
 						//console.log(d1.toLocaleString() + " " + d.toLocaleString())
 						var et = d1.toString()
 						et = et.substring(0,24)
@@ -45,7 +53,7 @@ function ranktracker() {
 						
 						
 						if (rt != 0 ) {
-							games.unshift(result.uuid + "," + et + "," + points + "," + pos + "," + preScore + "," + rt + "," + endScore + "," + rankName + ",")
+							games.unshift(result.uuid + "," + et + "," + points + "," + pos + "," + preScore + "," + rt + "," + endScore + "," + rankName + "," + "roomName" + ",")
 						}
 						
 					});
