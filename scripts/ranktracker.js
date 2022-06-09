@@ -9,10 +9,7 @@ function ranktracker() {
 				"fetchGameRecordList",
 				{start:x * 5, count : 5 }, // anon edit 2
 					function temp(i, ret) {
-					//console.log(ret)
 					ret.record_list.forEach(result => {
-						
-						console.log(result)
 						var seat = -1
 						var preScore = 0
 						var rt = 0
@@ -29,7 +26,6 @@ function ranktracker() {
 							
 						
 						
-						//console.log(d1.toLocaleString() + " " + d.toLocaleString())
 						var et = d1.toString()
 						et = et.substring(0,24)
 						for (let i = 0; i < result.accounts.length; i++){
