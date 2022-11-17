@@ -2,7 +2,7 @@ function ranktracker(username) {
 	games = []
 	//Total games fethced = max * 5	
 	var start = 0
-	var max = 1
+	var max = 5
 	var c = start
 	for (x = start; x < max ; x++) {
 		app.NetAgent.sendReq2Lobby(
@@ -10,11 +10,11 @@ function ranktracker(username) {
 				"fetchGameRecordList",
 				{start:x * 5, count : 5 }, // anon edit 2
 					function temp(i, ret) {
+					//console.log("started", ret)
 					
-					if (!ret) {
+                    if (!ret) {
 						return;
 					}
-
 					ret.record_list.forEach(result => {
 						
 						var seat = -1
@@ -26,10 +26,10 @@ function ranktracker(username) {
 						var d = new Date(result.end_time * 1000)
 						var d1 = new Date(result.start_time * 1000)
 						var rankName = ""
-						
-						
+											
 						if(result.config.meta.mode_id) {
 							var roomName = cfg.desktop.matchmode.map_[result.config.meta.mode_id].room_name_en
+                            
 						}							
 						
 						var et = d1.toString()
@@ -43,15 +43,14 @@ function ranktracker(username) {
 							}
 						}
 							
-						for (let j = 0; j < 4; j++){
+						for (let j = 0; j < result.result.players.length; j++){
 							if (result.result.players[j].seat == seat) {
 								rt = result.result.players[j].grading_score
 								pos = j
 								points = result.result.players[j].part_point_1
 							}				
 						}
-												
-								
+																				
 						endScore = preScore + rt
 						
 						
@@ -60,12 +59,13 @@ function ranktracker(username) {
 						}
 						
 					});
+                    c += 1;
+                    console.log("#".repeat(c));
 
-					console.log("done call: " + c)
-					c = c + 1
-					if	(c == max) {
-							games.forEach(e=> console.log(e))
-					}
+					if (c == max){
+                        games.forEach(e=> console.log(e))
+                    }
+                    										
 				})
 
 	}
